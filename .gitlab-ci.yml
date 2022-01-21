@@ -1,0 +1,16 @@
+stages:
+  - codeStyle
+
+
+codeStyle:
+  stage: codeStyle
+  except:
+    - master
+  script:
+     - sh /root/fixer/.cs-fixer.sh  #'--encoding=windows-1251'
+  artifacts: # файлы которые потом можно скачать будет
+    name: "$CI_COMMIT_REF_SLUG"
+    when: on_failure  # загружать артефакты только в случае сбоя задания
+    paths:
+        - code-style.log
+    expire_in: 1440 minutes
