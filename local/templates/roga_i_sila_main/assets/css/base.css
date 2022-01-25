@@ -37,3 +37,7 @@ select, textarea {
     padding: .5rem 2.5rem .5rem .75rem;
     line-height: 1.5rem;
 }
+
+.text-green {
+    color: #00ff00;
+}

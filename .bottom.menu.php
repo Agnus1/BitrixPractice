@@ -1,45 +1,38 @@
 <?
 $aMenuLinks = Array(
 	Array(
-		"Новости",
-		"news/",
+		"О компании",
+		"company/about/",
 		Array(),
 		Array(),
 		""
 	),
 
 	Array(
-		"Как купить",
-		"about/howto/",
+		"Контактная информация",
+		"company/contacts/",
 		Array(), 
 		Array(), 
 		"" 
 	),
 
 	Array(
-		"Доставка",
-		"about/delivery/",
+		"Условия продаж",
+		"company/department/",
 		Array(), 
-		Array(), 
+		Array('isGreen' => true), 
 		"" 
 	),
 	Array(
-		"О магазине",
-		"about/",
+		"Финансовый отдел",
+		"company/finances/",
 		Array(),
 		Array(),
-		""
+		"\$USER->IsAuthorized()",
 	),
 	Array(
-		"Гарантия",
-		"about/guaranty/",
-		Array(),
-		Array(),
-		""
-	),
-	Array(
-		"Контакты",
-		"about/contacts/",
+		"Для клиентов",
+		"company/clients/",
 		Array(),
 		Array(),
 		""
