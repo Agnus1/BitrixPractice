@@ -2,7 +2,7 @@
 $aMenuLinks = Array(
 	Array(
 		"О компании",
-		"company/about/",
+		"/company/about/",
 		Array(),
 		Array(),
 		""
@@ -10,7 +10,7 @@ $aMenuLinks = Array(
 
 	Array(
 		"Контактная информация",
-		"company/contacts/",
+		"/company/contacts/",
 		Array(), 
 		Array(), 
 		"" 
@@ -18,21 +18,21 @@ $aMenuLinks = Array(
 
 	Array(
 		"Условия продаж",
-		"company/department/",
+		"/company/department/",
 		Array(), 
 		Array('isGreen' => true), 
 		"" 
 	),
 	Array(
 		"Финансовый отдел",
-		"company/finances/",
+		"/company/finances/",
 		Array(),
 		Array(),
 		"\$USER->IsAuthorized()",
 	),
 	Array(
 		"Для клиентов",
-		"company/clients/",
+		"/company/clients/",
 		Array(),
 		Array(),
 		""

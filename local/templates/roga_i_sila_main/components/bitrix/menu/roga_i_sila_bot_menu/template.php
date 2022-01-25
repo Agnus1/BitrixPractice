@@ -10,12 +10,8 @@
 		if($arParams["MAX_LEVEL"] == 1 && $arItem["DEPTH_LEVEL"] > 1) 
 			continue;
 	?>
-		<?php if($arItem["SELECTED"]): ?>
-				<li><a class="text-<?= $arItem["PARAMS"]["isGreen"] ? 'green' : 'orange' ?> cursor-default" href="<?=$arItem["LINK"]?>"><?=$arItem["TEXT"]?></a></li>
-		<?php else: ?>
-			<li><a class="text-gray-600 hover:text-orange" href="<?=$arItem["LINK"]?>"><?=$arItem["TEXT"]?></a></li>
-		<?php endif ?>
-		
+
+			<li><a class="text-<?= $arItem['SELECTED'] ? ($arItem['PARAMS']['isGreen'] ? 'green cursor-default' : 'orange cursor-default') : 'gray-600 hover:text-orange' ?>" href="<?=$arItem["LINK"]?>"><?=$arItem["TEXT"]?></a></li>
 	<?php endforeach ?>
 
         </ul>
