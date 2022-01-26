@@ -18,7 +18,7 @@ $this->setFrameMode(true);
 <section class="news-block-inverse px-6 py-4">
     <div>
         <p class="inline-block text-3xl text-white font-bold mb-4"><?= GetMessage("TEMPLATE_HEADER") ?></p>
-        <span class="inline-block text-gray-200 pl-1"> / <b><?= ($arParams["DISPLAY_BOTTOM_PAGER"]) ? $arResult["NAV_STRING"] : "" ?></b></span>
+        <span class="inline-block text-gray-200 pl-1"> / <b><a href="<?= $arResult['LIST_PAGE_URL'] ?>" class="inline-block pl-1 text-gray-200 hover:text-orange"><b><?= GetMessage("ALL_BTN") ?></b></a></span>
     </div>
 	<div class="grid md:grid-cols-1 lg:grid-cols-3 gap-6">
 	<?foreach($arResult["ITEMS"] as $arItem):?>
@@ -27,7 +27,7 @@ $this->setFrameMode(true);
 		        <a 
 		        	class="block w-full h-full hover:opacity-75" 
 		        	href="<?= (!$arParams["HIDE_LINK_WHEN_NO_DETAIL"] || ($arItem["DETAIL_TEXT"] && $arResult["USER_HAVE_ACCESS"])) ? $arItem["DETAIL_PAGE_URL"] : "#" ?>">
-		        		<img src="<?=$arItem["PREVIEW_PICTURE"]["SRC"] ?? $this->GetFolder() . '/images/no_photo.png'?>"
+		        		<img src="<?=$arItem["PREVIEW_PICTURE"]["SRC"] ?? NO_IMAGE_PATH ?>"
 		        			width="<?=$arItem["PREVIEW_PICTURE"]["WIDTH"]?>"
 		        			height="<?=$arItem["PREVIEW_PICTURE"]["HEIGHT"]?>"
 		        			title="<?=$arItem["PREVIEW_PICTURE"]["TITLE"]?>"
