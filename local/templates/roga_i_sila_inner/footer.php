@@ -1,5 +1,6 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
-
+    </div>
+</div>
   </main>
     <footer class="container mx-auto">
         <section class="block sm:flex bg-white px-4 sm:px-8 py-4">
