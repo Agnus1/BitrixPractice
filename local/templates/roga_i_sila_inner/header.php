@@ -108,21 +108,21 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/assets/js/script.js");
     </nav>
     <main class="flex-1 container mx-auto bg-white">
         <div class="flex-1 grid grid-cols-4 lg:grid-cols-5 border-b">
-            <aside class="hidden sm:block col-span-1 border-r p-4">
-                <nav>
-                    <ul class="text-sm">
-                        <li>
-                            <p class="text-xl text-black font-bold mb-4">Информация</p>
-                            <ul class="space-y-2">
-                                <li><a class="hover:text-orange" href="/company/about/">О компании</a></li>
-                                <li><a class="text-orange cursor-default" href="/company/contacts/">Контактная информация</a></li>
-                                <li><a class="hover:text-orange" href="/company/department/">Условия продаж</a></li>
-                                <li><a class="hover:text-orange" href="/company/finances/">Финансовый отдел</a></li>
-                                <li><a class="hover:text-orange" href="/company/clients/">Для клиентов</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
+            <?$APPLICATION->IncludeComponent(
+                "bitrix:menu",
+                "roga_i_sila_left_menu",
+                Array(
+                    "ALLOW_MULTI_SELECT" => "N",
+                    "CHILD_MENU_TYPE" => "left",
+                    "DELAY" => "N",
+                    "MAX_LEVEL" => "1",
+                    "MENU_CACHE_GET_VARS" => array(""),
+                    "MENU_CACHE_TIME" => "3600",
+                    "MENU_CACHE_TYPE" => "N",
+                    "MENU_CACHE_USE_GROUPS" => "Y",
+                    "ROOT_MENU_TYPE" => "bottom",
+                    "USE_EXT" => "N"
+                )
+            );?>
             <div class="col-span-4 sm:col-span-3 lg:col-span-4 p-4">
             <h1 class="text-black text-3xl font-bold mb-4"><?=$APPLICATION->AddBufferContent([$APPLICATION, 'GetTitle'])?></h1>
