@@ -9,17 +9,18 @@ $asset->addCss(DEFAULT_ASSETS_PATH . "/js/vendor/slick.css");
 $asset->addJs(DEFAULT_ASSETS_PATH . "/js/vendor/jquery-3.6.0.js");
 $asset->addJs(DEFAULT_ASSETS_PATH . "/js/vendor/slick.js");
 $asset->addJs(SITE_TEMPLATE_PATH . "/assets/js/script.js");
+
 ?>
 <!doctype html>
 <html class="antialiased" lang="ru">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <?$APPLICATION->ShowHead();?>
-    <title><?$APPLICATION->ShowTitle();?></title>
+    <?$APPLICATION->ShowHead()?>
+    <title><? $APPLICATION->ShowTitle() ?></title>
     <link href="<?=DEFAULT_ASSETS_PATH?>/favicon.ico" rel="shortcut icon" type="image/x-icon">
 </head>
 <body class="bg-white text-gray-600 font-sans leading-normal text-base tracking-normal flex min-h-screen flex-col">
-    <?$APPLICATION->ShowPanel();?>
+    <?$APPLICATION->ShowPanel()?>
 <div class="wrapper flex flex-1 flex-col">
     <header class="bg-white">
         <div class="border-b">
@@ -102,4 +103,30 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/assets/js/script.js");
             </div>
         </div>
     </header>
+    <nav class="container mx-auto bg-gray-100 py-1 px-4 text-sm flex items-center space-x-2">
+        <a class="hover:text-orange" href="index.html">Главная</a>
+        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-3 w-3 mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
+        </svg>
+        <span>Легковые</span>
+    </nav>
     <main class="flex-1 container mx-auto bg-white">
+        <div class="flex-1 grid grid-cols-4 lg:grid-cols-5 border-b">
+            <aside class="hidden sm:block col-span-1 border-r p-4">
+                <nav>
+                    <ul class="text-sm">
+                        <li>
+                            <p class="text-xl text-black font-bold mb-4">Информация</p>
+                            <ul class="space-y-2">
+                                <li><a class="hover:text-orange" href="/company/about/">О компании</a></li>
+                                <li><a class="text-orange cursor-default" href="/company/contacts/">Контактная информация</a></li>
+                                <li><a class="hover:text-orange" href="/company/department/">Условия продаж</a></li>
+                                <li><a class="hover:text-orange" href="/company/finances/">Финансовый отдел</a></li>
+                                <li><a class="hover:text-orange" href="/company/clients/">Для клиентов</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <div class="col-span-4 sm:col-span-3 lg:col-span-4 p-4">
+            <h1 class="text-black text-3xl font-bold mb-4"><?=$APPLICATION->AddBufferContent([$APPLICATION, 'GetTitle'])?></h1>
