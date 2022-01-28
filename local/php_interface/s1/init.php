@@ -1,5 +1,11 @@
 <?php
 
+function dump($var) {
+  echo '<pre>';
+  var_dump($var);
+  echo '</pre>';
+}
+
 // Путь к кратинке-заглушке
 define("NO_IMAGE_PATH", SITE_DIR . 'images/no_photo.png');
 
