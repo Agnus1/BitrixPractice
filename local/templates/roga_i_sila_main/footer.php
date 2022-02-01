@@ -10,7 +10,7 @@
 		"ALL_URL" => "/company/stores/",
 		"AMOUNT_OF_EL" => "2",
 		"CACHE_GROUPS" => "Y",
-		"CACHE_TIME" => "180",
+		"CACHE_TIME" => "3600",
 		"CACHE_TYPE" => "A",
 		"DETAIL_URL" => "",
 		"IBLOCKS" => "6",
@@ -19,7 +19,7 @@
 		"SORT_FIELD" => "RAND",
 		"SORT_ORDER" => "DESC",
 		"COMPONENT_TEMPLATE" => "stores_short",
-		"LIST_PAGE_URL" => ""
+		"LIST_PAGE_URL" => "/company/stores/"
 	),
 	false
 );?>

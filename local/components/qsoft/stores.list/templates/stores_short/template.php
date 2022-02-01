@@ -10,31 +10,33 @@
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
-$frame = $this->createFrame()->begin('');
+
+// начало динамической зоны компонента, установка заглушки при загрузке
+$frame = $this->createFrame()->begin('Загрузка');
 ?>
 <div class="flex-1">
     <div>
         <p class="inline-block text-3xl text-black font-bold mb-4"><?=GetMessage('OUR_SALONS')?></p>
-        <span class="inline-block pl-1"> / <a href="<?=$arResult['LIST_PAGE_URL']?>" class="inline-block pl-1 text-gray-600 hover:text-orange"><b><?=GetMessage("ALL")?></b></a></span>
+        <span class="inline-block pl-1"> / <a href="<?=$arParams['LIST_PAGE_URL']?>" class="inline-block pl-1 text-gray-600 hover:text-orange"><b><?=GetMessage("ALL")?></b></a></span>
     </div>
     
     <div class="grid gap-6 grid-cols-1 lg:grid-cols-2">
-    	<?foreach ($arResult["ELEMENTS"] as $salon):?>
+    	<?foreach ($arResult as $salon):?>
 	        <div class="w-full flex">
 	            <div class="h-48 lg:h-auto w-32 xl:w-48 flex-none text-center rounded-lg overflow-hidden">
-	                <a class="block w-full h-full hover:opacity-75" href="<?=$arResult['LIST_PAGE_URL']?>"><img
-	                	src="<?=$salon["PICTURE"]["SRC"]?>" 
+	                <a class="block w-full h-full hover:opacity-75" href="<?=$arParams['LIST_PAGE_URL']?>"><img
+	                	src="<?=$salon["IMAGE_SRC"]?>"
 	                	class="w-full h-full object-cover"></a>
 	            </div>
 	            <div class="px-4 flex flex-col justify-between leading-normal">
 	                <div class="mb-8">
 	                    <div class="text-black font-bold text-xl mb-2">
-	                        <a class="hover:text-orange" href="<?=$arResult['LIST_PAGE_URL']?>"><?=$salon["NAME"]?></a>
+	                        <a class="hover:text-orange" href="<?=$arParams['LIST_PAGE_URL']?>"><?=$salon["NAME"]?></a>
 	                    </div>
 	                    <div class="text-base space-y-2">
-	                        <p class="text-gray-400"><?=$salon["ADDRESS"]["VALUE"]?></p>
-	                        <p class="text-black"><?=$salon["PHONE"]["VALUE"]?></p>
-	                        <p class="text-sm"><?=GetMessage("WORK_HOURS")?>:<br><?=$salon["WORK_HOURS"]["VALUE"]?></p>
+	                        <p class="text-gray-400"><?=$salon["PROPERTY_ADDRESS_VALUE"]?></p>
+	                        <p class="text-black"><?=$salon["PROPERTY_PHONE_VALUE"]?></p>
+	                        <p class="text-sm"><?=GetMessage("WORK_HOURS")?>:<br><?=$salon["PROPERTY_WORK_HOURS_VALUE"]?></p>
 	                    </div>
 	                </div>
 	            </div>
@@ -43,5 +45,6 @@ $frame = $this->createFrame()->begin('');
     </div>
 </div>
 <?
+// закрытие динамической зоны компонента
 $frame->end();
 ?>

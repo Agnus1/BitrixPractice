@@ -19,39 +19,38 @@ while ($arr = $rsIBlock->Fetch())
 $fieldsIBlock["RAND"] = GetMessage("RAND"); 
 
 
-$arComponentParameters = array(
-	"GROUPS" => array(
-	),
-	"PARAMETERS" => array(
-		"IBLOCK_TYPE" => array(
+$arComponentParameters = [
+	"GROUPS" => [],
+	"PARAMETERS" => [
+		"IBLOCK_TYPE" => [
 			"PARENT" => "BASE",
 			"NAME" => GetMessage("IBLOCK_TYPE"),
 			"TYPE" => "LIST",
 			"VALUES" => $arIBlockType,
 			"REFRESH" => "Y",
-		),
-		"IBLOCKS" => array(
+		],
+		"IBLOCKS" => [
 			"PARENT" => "BASE",
 			"NAME" => GetMessage("IBLOCK_IBLOCK"),
 			"TYPE" => "LIST",
 			"VALUES" => $arIBlock,
 			"REFRESH" => "Y",
-		),
-		"AMOUNT_OF_EL" => array(
+		],
+		"AMOUNT_OF_EL" => [
 			"PARENT" => "BASE",
 			"NAME" => GetMessage("AMOUNT_OF_EL"),
 			"TYPE" => "STRING",
 			"DEFAULT" => '2',
-		),
-		"SORT_FIELD" => array(
+		],
+		"SORT_FIELD" => [
 			"PARENT" => "ADDITIONAL_SETTINGS",
 			"NAME" => GetMessage("SORT_FIELD"),
 			"TYPE" => "LIST",
 			"VALUES" => $fieldsIBlock,
 			"DEFAULT" => "RAND",
 			"REFRESH" => "Y",
-		),
-		"SORT_ORDER" => array(
+		],
+		"SORT_ORDER" => [
 			"PARENT" => "ADDITIONAL_SETTINGS",
 			"NAME" => GetMessage("SORT_ORDER"),
 			"TYPE" => "LIST",
@@ -60,7 +59,7 @@ $arComponentParameters = array(
 				"ASC" => GetMessage("ASC")
 			],
 			"DEFAULT" => "DESC",
-		),
+		],
 		"LIST_PAGE_URL" => CIBlockParameters::GetPathTemplateParam(
 			"ALL",
 			"ALL_URL",
@@ -68,13 +67,13 @@ $arComponentParameters = array(
 			"",
 			"URL_TEMPLATES"
 		),
-		"CACHE_TIME"  =>  array("DEFAULT"=>180),
-		"CACHE_GROUPS" => array(
+		"CACHE_TIME"  =>  ["DEFAULT"=>180],
+		"CACHE_GROUPS" => [
 			"PARENT" => "CACHE_SETTINGS",
 			"NAME" => GetMessage("CP_BPR_CACHE_GROUPS"),
 			"TYPE" => "CHECKBOX",
 			"DEFAULT" => "Y",
-		),
-	),
-);
+		],
+	],
+];
 ?>
