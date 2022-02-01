@@ -5,22 +5,25 @@
     <footer class="container mx-auto">
         <section class="block sm:flex bg-white px-4 sm:px-8 py-4">
             <?$APPLICATION->IncludeComponent(
-                "qsoft:stores.list",
-                "",
-                array(
-                    "ALL_URL" => "/company/stores/",
-                    "AMOUNT_OF_EL" => "2",
-                    "CACHE_GROUPS" => "Y",
-                    "CACHE_TIME" => "180",
-                    "CACHE_TYPE" => "A",
-                    "DETAIL_URL" => "",
-                    "IBLOCKS" => "6",
-                    "IBLOCK_TYPE" => "salons",
-                    "PARENT_SECTION" => "",
-                    "SORT_FIELD" => "46",
-                    "SORT_ORDER" => "0"
-                )
-            )?>
+	"qsoft:stores.list", 
+	"stores_short", 
+	array(
+		"ALL_URL" => "/company/stores/",
+		"AMOUNT_OF_EL" => "2",
+		"CACHE_GROUPS" => "Y",
+		"CACHE_TIME" => "180",
+		"CACHE_TYPE" => "A",
+		"DETAIL_URL" => "",
+		"IBLOCKS" => "6",
+		"IBLOCK_TYPE" => "salons",
+		"PARENT_SECTION" => "",
+		"SORT_FIELD" => "ID",
+		"SORT_ORDER" => "DESC",
+		"COMPONENT_TEMPLATE" => "stores_short",
+		"LIST_PAGE_URL" => ""
+	),
+	false
+);?>
             <?$APPLICATION->IncludeComponent(
             	"bitrix:menu", 
             	"roga_i_sila_bot_menu", 

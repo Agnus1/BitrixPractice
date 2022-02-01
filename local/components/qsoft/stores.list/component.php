@@ -39,15 +39,13 @@ if(isset($arIBlockFilter))
 	));
 
 	if($arIBlock = $rsIBlocks->Fetch()) {
-		$arIBlockFilter[] = $arIBlock["ID"];
+		$arIBlockFilter = $arIBlock["ID"];
 	}
 }
 
 unset($arParams["IBLOCK_TYPE"]);
 
-$arParams["PARENT_SECTION"] = intval($arParams["PARENT_SECTION"]);
-$arParams["IBLOCKS"] = $arIBlockFilter;
-
+// проверка на наличие актулаьного кэша
 if(!empty($arIBlockFilter) && $this->StartResultCache(false, ($arParams["CACHE_GROUPS"] === "N"? false: $USER->GetGroups())))
 {
 	if(!CModule::IncludeModule("iblock"))
@@ -65,25 +63,18 @@ if(!empty($arIBlockFilter) && $this->StartResultCache(false, ($arParams["CACHE_G
 		"IBLOCK_SECTION_ID",
 		"NAME",
 		"PREVIEW_PICTURE",
-		"DETAIL_PICTURE",
 		"LIST_PAGE_URL",
 	);
 
 	// WHERE
 	$arFilter = array(
-		"IBLOCK_ID" => $arParams["IBLOCKS"],
+		"IBLOCK_ID" => $arIBlockFilter,
 		"ACTIVE_DATE" => "Y",
 		"ACTIVE" => "Y",
 	);
 
 	// LIMIT
 	$arLimit = ["nTopCount" => $arParams['AMOUNT_OF_EL']];
-
-	if ($arParams["PARENT_SECTION"] > 0)
-	{
-		$arFilter["SECTION_ID"] = $arParams["PARENT_SECTION"];
-		$arFilter["INCLUDE_SUBSECTIONS"] = "Y";
-	}
 
 	//ORDER BY
 	$arSort = array(
@@ -93,8 +84,10 @@ if(!empty($arIBlockFilter) && $this->StartResultCache(false, ($arParams["CACHE_G
 	$rsIBlockElement = CIBlockElement::GetList($arSort, $arFilter, false, $arLimit, $arSelect);
 	$rsIBlockElement->SetUrlTemplates("", "", $arParams["ALL_URL"]);
 
+	// получение элементов из списка и запоминание в arResult
 	for ($i = 0; $i < $arParams['AMOUNT_OF_EL']; $i++) {
 		$el = $rsIBlockElement->GetNextElement();
+
 		$arResult["ELEMENTS"][$i] = array_merge($el->GetProperties(), $el->GetFields());
 		$arResult["ELEMENTS"][$i]["PICTURE"] = CFile::GetFileArray($arResult["ELEMENTS"][$i]["PREVIEW_PICTURE"]);
 
