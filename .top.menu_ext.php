@@ -12,9 +12,9 @@ $aMenuLinksExt = $APPLICATION->IncludeComponent(
 		"DEPTH_LEVEL" => "2",
 		"IBLOCK_ID" => "5",
 		"IBLOCK_TYPE" => "products",
-		"ID" => $_REQUEST["ID"],
+		"ID" => "",
 		"IS_SEF" => "N",
-		"SECTION_URL" => ""
+		"SECTION_URL" => "/catalog/#SECTION_CODE#/"
 	)
 );
 $aMenuLinks = array_merge($aMenuLinks, $aMenuLinksExt);

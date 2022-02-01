@@ -1,7 +1,5 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 
-<?if (!empty($arResult)):?>
-<ul id="horizontal-multilevel-menu">
 
 <?if (!empty($arResult)):?>
 <nav class="order-1">
@@ -43,7 +41,7 @@
             <?$previousLevel = $arItem["DEPTH_LEVEL"];?>
         <?endforeach?>
 
-        <?if ($previousLevel > 1)?>
+        <?if ($previousLevel > 1):?>
             </ul></li>
         <?endif?>
     </ul>
