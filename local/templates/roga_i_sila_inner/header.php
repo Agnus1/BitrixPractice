@@ -61,34 +61,32 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/assets/js/script.js");
                 </form>
 
                 <?$APPLICATION->IncludeComponent(
-	"bitrix:menu", 
-	"catalog_top", 
-	array(
-		"ALLOW_MULTI_SELECT" => "N",
-		"CHILD_MENU_TYPE" => "left",
-		"DELAY" => "N",
-		"MAX_LEVEL" => "2",
-		"MENU_CACHE_GET_VARS" => array(
-		),
-		"MENU_CACHE_TIME" => "3600",
-		"MENU_CACHE_TYPE" => "A",
-		"MENU_CACHE_USE_GROUPS" => "Y",
-		"ROOT_MENU_TYPE" => "top",
-		"USE_EXT" => "Y",
-		"COMPONENT_TEMPLATE" => "catalog_top"
-	),
-	false
-);?>
+                    "bitrix:menu", 
+                    "catalog_top", 
+                    array(
+                        "ALLOW_MULTI_SELECT" => "N",
+                        "CHILD_MENU_TYPE" => "left",
+                        "DELAY" => "N",
+                        "MAX_LEVEL" => "2",
+                        "MENU_CACHE_GET_VARS" => array(
+                        ),
+                        "MENU_CACHE_TIME" => "3600",
+                        "MENU_CACHE_TYPE" => "A",
+                        "MENU_CACHE_USE_GROUPS" => "Y",
+                        "ROOT_MENU_TYPE" => "top",
+                        "USE_EXT" => "Y",
+                        "COMPONENT_TEMPLATE" => "catalog_top"
+                    ),
+                    false
+                );?>
             </div>
         </div>
     </header>
-    <nav class="container mx-auto bg-gray-100 py-1 px-4 text-sm flex items-center space-x-2">
-        <a class="hover:text-orange" href="index.html">Главная</a>
-        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-3 w-3 mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
-        </svg>
-        <span>Легковые</span>
-    </nav>
+    <?$APPLICATION->IncludeComponent("bitrix:breadcrumb", "breadcrumbs_qsoft", Array(
+    
+        ),
+        false
+    );?>
     <main class="flex-1 container mx-auto bg-white">
         <div class="flex-1 grid grid-cols-4 lg:grid-cols-5 border-b">
             <?$APPLICATION->IncludeComponent(
