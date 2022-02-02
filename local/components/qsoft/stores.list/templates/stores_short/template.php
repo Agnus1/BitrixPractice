@@ -12,26 +12,30 @@
 /** @var CBitrixComponent $component */
 
 // начало динамической зоны компонента, установка заглушки при загрузке
-$frame = $this->createFrame()->begin('Загрузка');
+$frame = $this->createFrame()->begin(GetMessage("LOADING"));
 ?>
 <div class="flex-1">
     <div>
         <p class="inline-block text-3xl text-black font-bold mb-4"><?=GetMessage('OUR_SALONS')?></p>
-        <span class="inline-block pl-1"> / <a href="<?=$arParams['LIST_PAGE_URL']?>" class="inline-block pl-1 text-gray-600 hover:text-orange"><b><?=GetMessage("ALL")?></b></a></span>
+        <?if ($arParams["SHOW_ALL"]):?>
+        	<span class="inline-block pl-1"> / <a href="<?=$arParams['LIST_PAGE_URL']?>" class="inline-block pl-1 text-gray-600 <?=$arParams["SHOW_ALL"] ? "hover:text-orange" : "disabled"?>"><b><?=GetMessage("ALL")?></b></a></span>
+ 		<?endif?>   
     </div>
     
     <div class="grid gap-6 grid-cols-1 lg:grid-cols-2">
     	<?foreach ($arResult as $salon):?>
 	        <div class="w-full flex">
 	            <div class="h-48 lg:h-auto w-32 xl:w-48 flex-none text-center rounded-lg overflow-hidden">
-	                <a class="block w-full h-full hover:opacity-75" href="<?=$arParams['LIST_PAGE_URL']?>"><img
+	                <a class="block w-full h-full <?=$arParams["SHOW_ALL"] ? "hover:opacity-75" : "disabled"?>" href="<?=$arParams['LIST_PAGE_URL']?>">
+	                	<img
 	                	src="<?=$salon["IMAGE_SRC"]?>"
-	                	class="w-full h-full object-cover"></a>
+	                	class="w-full h-full object-cover">
+	                </a>
 	            </div>
 	            <div class="px-4 flex flex-col justify-between leading-normal">
 	                <div class="mb-8">
 	                    <div class="text-black font-bold text-xl mb-2">
-	                        <a class="hover:text-orange" href="<?=$arParams['LIST_PAGE_URL']?>"><?=$salon["NAME"]?></a>
+	                        <a class="<?=$arParams["SHOW_ALL"] ? "hover:text-orange" : "disabled"?>" href="<?=$arParams['LIST_PAGE_URL']?>"><?=$salon["NAME"]?></a>
 	                    </div>
 	                    <div class="text-base space-y-2">
 	                        <p class="text-gray-400"><?=$salon["PROPERTY_ADDRESS_VALUE"]?></p>

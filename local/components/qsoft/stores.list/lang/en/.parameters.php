@@ -11,4 +11,5 @@ $MESS["SORT_ORDER"] = "Sort order";
 $MESS["RAND"] = "Random";
 $MESS["DESC"] = "Descending";
 $MESS["ASC"] = "Ascending";
+$MESS["SHOW_ALL"] = "Show 'all' button";
 ?>

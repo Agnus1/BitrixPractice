@@ -19,7 +19,8 @@
 		"SORT_FIELD" => "RAND",
 		"SORT_ORDER" => "DESC",
 		"COMPONENT_TEMPLATE" => "stores_short",
-		"LIST_PAGE_URL" => "/company/stores/"
+		"LIST_PAGE_URL" => "/company/stores/",
+		"SHOW_ALL" => "Y"
 	),
 	false
 );?>

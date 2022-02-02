@@ -6,10 +6,10 @@ if(!CModule::IncludeModule("iblock"))
 
 $arIBlockType = CIBlockParameters::GetIBlockTypes();
 
-$arIBlock=array(
+$arIBlock = [
 	"-" => GetMessage("IBLOCK_ANY"),
-);
-$rsIBlock = CIBlock::GetList(Array("sort" => "asc"), Array("TYPE" => $arCurrentValues["IBLOCK_TYPE"], "ACTIVE"=>"Y"));
+];
+$rsIBlock = CIBlock::GetList(["sort" => "asc"], ["TYPE" => $arCurrentValues["IBLOCK_TYPE"], "ACTIVE"=>"Y"]);
 
 while ($arr = $rsIBlock->Fetch())
 {
@@ -17,7 +17,6 @@ while ($arr = $rsIBlock->Fetch())
 	$fieldsIBlock = array_combine(array_keys($arr), array_keys($arr));
 }
 $fieldsIBlock["RAND"] = GetMessage("RAND"); 
-
 
 $arComponentParameters = [
 	"GROUPS" => [],
@@ -29,7 +28,7 @@ $arComponentParameters = [
 			"VALUES" => $arIBlockType,
 			"REFRESH" => "Y",
 		],
-		"IBLOCKS" => [
+		"IBLOCK" => [
 			"PARENT" => "BASE",
 			"NAME" => GetMessage("IBLOCK_IBLOCK"),
 			"TYPE" => "LIST",
@@ -60,6 +59,12 @@ $arComponentParameters = [
 			],
 			"DEFAULT" => "DESC",
 		],
+		"SHOW_ALL" => [
+			"PARENT" => "URL_TEMPLATES",
+			"NAME" => GetMessage("SHOW_ALL"),
+			"TYPE" => "CHECKBOX",
+			"DEFAULT" => "Y",
+		],
 		"LIST_PAGE_URL" => CIBlockParameters::GetPathTemplateParam(
 			"ALL",
 			"ALL_URL",
@@ -68,12 +73,6 @@ $arComponentParameters = [
 			"URL_TEMPLATES"
 		),
 		"CACHE_TIME"  =>  ["DEFAULT"=>180],
-		"CACHE_GROUPS" => [
-			"PARENT" => "CACHE_SETTINGS",
-			"NAME" => GetMessage("CP_BPR_CACHE_GROUPS"),
-			"TYPE" => "CHECKBOX",
-			"DEFAULT" => "Y",
-		],
 	],
 ];
 ?>
