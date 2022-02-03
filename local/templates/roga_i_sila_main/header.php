@@ -80,4 +80,9 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/assets/js/script.js");
             </div>
         </div>
     </header>
+    <?$APPLICATION->IncludeComponent("bitrix:breadcrumb", "breadcrumbs_qsoft", Array(
+    
+        ),
+        false
+    );?>
     <main class="flex-1 container mx-auto bg-white">
