@@ -41,3 +41,8 @@ select, textarea {
 .text-green {
     color: #00ff00;
 }
+
+a.disabled {
+  /* disable the pointer events */
+  pointer-events: none;
+}

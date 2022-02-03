@@ -1,7 +1,15 @@
 <?php
 
-// Путь к кратинке-заглушке
-define("NO_IMAGE_PATH", SITE_DIR . 'images/no_photo.png');
+function dump($var) {
+  echo '<pre>';
+  var_dump($var);
+  echo '</pre>';
+}
 
-// Путь к default-ассетам для шаблонов страниц
-define("DEFAULT_ASSETS_PATH", SITE_DIR . 'local/templates/.default/assets');
+if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/local/php_interface/include/constants.php")) {
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/local/php_interface/include/constants.php");
+}
+
+if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/local/php_interface/include/event_handlers.php")) {
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/local/php_interface/include/event_handlers.php");
+}

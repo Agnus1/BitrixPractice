@@ -31,24 +31,20 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/assets/js/script.js");
                     </span>
                 </div>
                 <div>
-                    <ul class="flex justify-center sm:justify-end items-center space-x-8 text-sm">
-                        <li>
-                            <a class="text-gray-500 hover:text-orange" href="authorized.html">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block text-orange h-4 w-4" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                                Регистрация
-                            </a>
-                        </li>
-                        <li>
-                            <a class="text-gray-500 hover:text-orange" href="form.html">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block text-orange h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                                </svg>
-                                Авторизация
-                            </a>
-                        </li>
-                    </ul>
+                    <?$APPLICATION->IncludeComponent(
+                        "bitrix:system.auth.form", 
+                        "auth_form_header", 
+                        array(
+                            "FORGOT_PASSWORD_URL" => "",
+                            "PROFILE_URL" => "/personal/",
+                            "REGISTER_URL" => "/auth/",
+                            "SHOW_ERRORS" => "N",
+                            "COMPONENT_TEMPLATE" => "auth_form_header",
+                            "AUTHORIZE_URL" => "/login/",
+                            "PERSONAL_URL" => "/personal/profile/"
+                        ),
+                        false
+                    );?>
                 </div>
             </div>
         </div>
@@ -64,69 +60,50 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/assets/js/script.js");
                     </button>
                 </form>
 
-                <nav class="order-1">
-                    <ul class="block lg:flex">
-                        <li class="group">
-                            <a class="inline-block p-4 text-black font-bold border-l border-r border-transparent group-hover:text-orange group-hover:bg-gray-100 group-hover:border-l group-hover:border-r group-hover:border-gray-200 group-hover:shadow" href="catalog.html">
-                                Легковые
-                                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </a>
-
-                            <ul class="dropdown-navigation-submenu absolute hidden group-hover:block bg-white shadow-lg">
-                                <li><a class="block py-2 px-4 text-black hover:text-orange hover:bg-gray-100" href="catalog.html">Седаны</a></li>
-                                <li><a class="block py-2 px-4 text-black hover:text-orange hover:bg-gray-100" href="catalog.html">Хетчбеки</a></li>
-                                <li><a class="block py-2 px-4 text-black hover:text-orange hover:bg-gray-100" href="catalog.html">Универсалы</a></li>
-                                <li><a class="block py-2 px-4 text-black hover:text-orange hover:bg-gray-100" href="catalog.html">Купе</a></li>
-                                <li><a class="block py-2 px-4 text-black hover:text-orange hover:bg-gray-100" href="catalog.html">Родстеры</a></li>
-                            </ul>
-                        </li>
-                        <li class="group">
-                            <a class="inline-block p-4 text-black font-bold border-l border-r border-transparent group-hover:text-orange group-hover:bg-gray-100 group-hover:border-l group-hover:border-r group-hover:border-gray-200 group-hover:shadow" href="catalog.html">
-                                Внедорожники
-                                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </a>
-                            <ul class="dropdown-navigation-submenu absolute hidden group-hover:block bg-white shadow-lg">
-                                <li><a class="block py-2 px-4 text-black hover:text-orange hover:bg-gray-100" href="catalog.html">Рамные</a></li>
-                                <li><a class="block py-2 px-4 text-black hover:text-orange hover:bg-gray-100" href="catalog.html">Пикапы</a></li>
-                                <li><a class="block py-2 px-4 text-black hover:text-orange hover:bg-gray-100" href="catalog.html">Кроссоверы</a></li>
-                            </ul>
-                        </li>
-                        <li class="group"><a class="inline-block p-4 text-black font-bold hover:text-orange" href="catalog.html">Раритетные</a></li>
-                        <li class="group"><a class="inline-block p-4 text-black font-bold hover:text-orange" href="catalog.html">Распродажа</a></li>
-                        <li class="group"><a class="inline-block p-4 text-black font-bold hover:text-orange" href="catalog.html">Новинки</a></li>
-                    </ul>
-                </nav>
+                <?$APPLICATION->IncludeComponent(
+                    "bitrix:menu", 
+                    "catalog_top", 
+                    array(
+                        "ALLOW_MULTI_SELECT" => "N",
+                        "CHILD_MENU_TYPE" => "left",
+                        "DELAY" => "N",
+                        "MAX_LEVEL" => "2",
+                        "MENU_CACHE_GET_VARS" => array(
+                        ),
+                        "MENU_CACHE_TIME" => "3600",
+                        "MENU_CACHE_TYPE" => "A",
+                        "MENU_CACHE_USE_GROUPS" => "Y",
+                        "ROOT_MENU_TYPE" => "top",
+                        "USE_EXT" => "Y",
+                        "COMPONENT_TEMPLATE" => "catalog_top"
+                    ),
+                    false
+                );?>
             </div>
         </div>
     </header>
-    <nav class="container mx-auto bg-gray-100 py-1 px-4 text-sm flex items-center space-x-2">
-        <a class="hover:text-orange" href="index.html">Главная</a>
-        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-3 w-3 mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
-        </svg>
-        <span>Легковые</span>
-    </nav>
+    <?$APPLICATION->IncludeComponent("bitrix:breadcrumb", "breadcrumbs_qsoft", Array(
+    
+        ),
+        false
+    );?>
     <main class="flex-1 container mx-auto bg-white">
         <div class="flex-1 grid grid-cols-4 lg:grid-cols-5 border-b">
-            <aside class="hidden sm:block col-span-1 border-r p-4">
-                <nav>
-                    <ul class="text-sm">
-                        <li>
-                            <p class="text-xl text-black font-bold mb-4">Информация</p>
-                            <ul class="space-y-2">
-                                <li><a class="hover:text-orange" href="/company/about/">О компании</a></li>
-                                <li><a class="text-orange cursor-default" href="/company/contacts/">Контактная информация</a></li>
-                                <li><a class="hover:text-orange" href="/company/department/">Условия продаж</a></li>
-                                <li><a class="hover:text-orange" href="/company/finances/">Финансовый отдел</a></li>
-                                <li><a class="hover:text-orange" href="/company/clients/">Для клиентов</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
+            <?$APPLICATION->IncludeComponent(
+                "bitrix:menu",
+                "roga_i_sila_left_menu",
+                Array(
+                    "ALLOW_MULTI_SELECT" => "N",
+                    "CHILD_MENU_TYPE" => "left",
+                    "DELAY" => "N",
+                    "MAX_LEVEL" => "1",
+                    "MENU_CACHE_GET_VARS" => array(""),
+                    "MENU_CACHE_TIME" => "3600",
+                    "MENU_CACHE_TYPE" => "N",
+                    "MENU_CACHE_USE_GROUPS" => "Y",
+                    "ROOT_MENU_TYPE" => "bottom",
+                    "USE_EXT" => "N"
+                )
+            );?>
             <div class="col-span-4 sm:col-span-3 lg:col-span-4 p-4">
             <h1 class="text-black text-3xl font-bold mb-4"><?=$APPLICATION->AddBufferContent([$APPLICATION, 'GetTitle'])?></h1>
