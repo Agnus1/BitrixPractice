@@ -20,7 +20,8 @@
 		"SORT_ORDER" => "DESC",
 		"COMPONENT_TEMPLATE" => "stores_short",
 		"LIST_PAGE_URL" => "/company/stores/",
-		"SHOW_ALL" => "Y"
+		"SHOW_ALL" => "Y",
+		"IBLOCK" => "6"
 	),
 	false
 );?>
