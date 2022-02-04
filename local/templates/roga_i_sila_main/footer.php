@@ -16,12 +16,13 @@
 		"IBLOCKS" => "6",
 		"IBLOCK_TYPE" => "salons",
 		"PARENT_SECTION" => "",
-		"SORT_FIELD" => "RAND",
+		"SORT_FIELD" => "ID",
 		"SORT_ORDER" => "DESC",
 		"COMPONENT_TEMPLATE" => "stores_short",
-		"LIST_PAGE_URL" => "/company/stores/",
+		"LIST_PAGE_URL" => "/company/stores",
 		"SHOW_ALL" => "Y",
-		"IBLOCK" => "6"
+		"IBLOCK" => "6",
+		"SHOW_MAP" => "N"
 	),
 	false
 );?>

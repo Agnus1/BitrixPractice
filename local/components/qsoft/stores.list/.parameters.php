@@ -5,10 +5,6 @@ if(!CModule::IncludeModule("iblock"))
 	return;
 
 $arIBlockType = CIBlockParameters::GetIBlockTypes();
-
-$arIBlock = [
-	"-" => GetMessage("IBLOCK_ANY"),
-];
 $rsIBlock = CIBlock::GetList(["sort" => "asc"], ["TYPE" => $arCurrentValues["IBLOCK_TYPE"], "ACTIVE"=>"Y"]);
 
 while ($arr = $rsIBlock->Fetch())
@@ -39,7 +35,12 @@ $arComponentParameters = [
 			"PARENT" => "BASE",
 			"NAME" => GetMessage("AMOUNT_OF_EL"),
 			"TYPE" => "STRING",
-			"DEFAULT" => '2',
+		],
+		"SHOW_MAP" => [
+			"PARENT" => "BASE",
+			"NAME" => GetMessage("SHOW_MAP"),
+			"TYPE" => "CHECKBOX",
+			"DEFAULT" => "Y",
 		],
 		"SORT_FIELD" => [
 			"PARENT" => "ADDITIONAL_SETTINGS",
@@ -47,7 +48,6 @@ $arComponentParameters = [
 			"TYPE" => "LIST",
 			"VALUES" => $fieldsIBlock,
 			"DEFAULT" => "RAND",
-			"REFRESH" => "Y",
 		],
 		"SORT_ORDER" => [
 			"PARENT" => "ADDITIONAL_SETTINGS",
