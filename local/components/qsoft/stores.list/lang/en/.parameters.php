@@ -1,4 +1,4 @@
-<?
+<?php
 $MESS["IBLOCK_ALL_URL"] = "URL of the page with all contents";
 $MESS["IBLOCK_TYPE"] = "Type of information block";
 $MESS["IBLOCK_IBLOCK"] = "Information block";
@@ -13,4 +13,5 @@ $MESS["DESC"] = "Descending";
 $MESS["ASC"] = "Ascending";
 $MESS["SHOW_ALL"] = "Show 'all' button";
 $MESS["SHOW_MAP"] = "Show map";
+$MESS["NOT_SELECTED"] = "Not selected";
 ?>

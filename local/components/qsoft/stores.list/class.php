@@ -5,21 +5,30 @@ use Bitrix\Main\SystemException;
 
 class StoresList extends CBitrixComponent
 {
+    /**
+     * @param array $arParams
+     * @return array
+     */
     public function onPrepareComponentParams(array $arParams) : array
     {
-        unset($arParams["IBLOCK_TYPE"]);
         $arParams["SHOW_ALL"] = ($arParams["SHOW_ALL"] === "Y");
+        $arParams["SHOW_MAP"] = ($arParams["SHOW_MAP"] == "Y");
 
+        unset($arParams["IBLOCK_TYPE"]);
+        if (!$arParams["SHOW_ALL"]) {
+            unset($arParams["LIST_PAGE_URL"]);
+        }
         if (!isset($arParams["CACHE_TIME"])) {
             $arParams["CACHE_TIME"] = 1800;
         }
-
         return $arParams;
     }
 
+    /**
+     * @return void
+     */
     public function executeComponent() : void
     {
-
         if ($this->StartResultCache(false, false)) {
             try {
                 $this->checkInputErrors();
@@ -27,22 +36,24 @@ class StoresList extends CBitrixComponent
                 $this->arResult = $this->getArResult($rsIBlockElement);
                 $this->setLinks($this->arResult[0]["LIST_PAGE_URL"]);
             } catch(SystemException $e) {
-                ShowError($e->getMessage());
                 $this->hideLinks();
+                ShowError($e->getMessage());
             }
+
             $this->IncludeComponentTemplate();
         }
     }
 
+    /**
+     * @param CIBlockResult $rsIBlockElement
+     * @return array
+     */
     protected function getArResult(CIBlockResult $rsIBlockElement) : array
     {
         while ($salon = $rsIBlockElement->GetNext()) {
             $arResult[$salon["ID"]] = $salon;
-        }
-
-        foreach ($arResult as $salonId => $salon) {
             if ($salon['PREVIEW_PICTURE']) {
-                $images[$salonId] = $salon["PREVIEW_PICTURE"];
+                $images[$salon["ID"]] = $salon["PREVIEW_PICTURE"];
             }
         }
 
@@ -59,33 +70,38 @@ class StoresList extends CBitrixComponent
         return array_values($arResult);
     }
 
+    /**
+     * @return CIBlockResult
+     */
     protected function getSalonsList() : CIBlockResult
     {
         // SELECT
         $arSelect = [
             "ID",
             "IBLOCK_ID",
-            "CODE",
             "IBLOCK_SECTION_ID",
             "NAME",
             "PREVIEW_PICTURE",
-            "LIST_PAGE_URL",
             "PROPERTY_PHONE",
             "PROPERTY_ADDRESS",
             "PROPERTY_WORK_HOURS",
+            $this->arParams["SHOW_ALL"] ? "LIST_PAGE_URL" : "",
+            $this->arParams["SHOW_MAP"] ? "PROPERTY_MAP" : "",
         ];
 
         // WHERE
         $arFilter = [
-            "IBLOCK_ID" => $arIBlockFilter,
+            "IBLOCK_ID" => intval($this->arParams["IBLOCK"]),
             "ACTIVE_DATE" => "Y",
             "ACTIVE" => "Y",
         ];
 
         // LIMIT
-        $arLimit = [
-            "nTopCount" => $this->arParams['AMOUNT_OF_EL'],
-        ];
+        if ($this->arParams['AMOUNT_OF_EL'] !== "UNLIMITED") {
+            $arLimit = [
+                "nTopCount" => $this->arParams['AMOUNT_OF_EL'],
+            ];
+        }
 
         //ORDER BY
         $arSort = [
@@ -97,19 +113,17 @@ class StoresList extends CBitrixComponent
 
         if (!$result->SelectedRowsCount()) {
             throw new SystemException(GetMessage("NO_ELEMENTS"));
-        } 
-
+        }
         return $result;
     }
 
+    /**
+     * @return void
+     */
     protected function checkInputErrors() : void
     {
         if (intval($this->arParams["IBLOCK"]) <= 0) {
             throw new SystemException(GetMessage("WRONG_IBLOCK"));
-        }
-
-        if (intval($this->arParams["AMOUNT_OF_EL"]) <= 0) {
-            throw new SystemException(GetMessage("WRONG_AMOUNT_OF_EL"));
         }
 
         if (!CModule::IncludeModule("iblock")) {
@@ -117,15 +131,40 @@ class StoresList extends CBitrixComponent
         }
     }
 
-    protected function setLinks(String $listPageUrl) : void
+    /**
+     * @return String Serialized string with map coordinates
+     */
+    protected function getMapSerializedPlacemarks() : String
     {
-        $link = empty($this->arParams["LIST_PAGE_URL"]) ? $listPageUrl : $this->arParams["LIST_PAGE_URL"];
-        $link = $this->arParams["SHOW_ALL"] ? $link : "#";
-        $this->arParams["LIST_PAGE_URL"] = $link;
+        foreach ($this->arResult as $salon) {
+            list($lat, $lon) = explode(',', $salon["PROPERTY_MAP_VALUE"]);
+            $res[] = [
+                "LON" => $lon,
+                "LAT" => $lat,
+                "TEXT" => $salon["NAME"],
+            ];
+        }
+
+        return  serialize($res);
     }
 
+    /**
+     * @param String|null $listPageUrl
+     * @return void
+     */
+    protected function setLinks(?String $listPageUrl) : void
+    {
+        if ($this->arParams["SHOW_ALL"]){
+            $this->arParams["LIST_PAGE_URL"] = empty($this->arParams["LIST_PAGE_URL"]) ? $listPageUrl : $this->arParams["LIST_PAGE_URL"];
+        }
+    }
+
+    /**
+     * @return void
+     */
     protected function hideLinks() : void
     {
+        $this->arParams["SHOW_MAP"] = false;
         $this->arParams["SHOW_ALL"] = false;
         $this->arParams["LIST_PAGE_URL"] = "#";
     }

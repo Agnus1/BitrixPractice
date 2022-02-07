@@ -1,4 +1,4 @@
-<?
+<?php
 $MESS["IBLOCK_ALL_URL"] = "URL, ведущий на страницу с полным списком";
 $MESS["IBLOCK_TYPE"] = "Тип инфоблока";
 $MESS["IBLOCK_IBLOCK"] = "Инфоблок";
@@ -13,4 +13,5 @@ $MESS["DESC"] = "По убыванию";
 $MESS["ASC"] = "По возрастанию";
 $MESS["SHOW_ALL"] = "Показывать кнопку 'все'";
 $MESS["SHOW_MAP"] = "Показывать карту";
+$MESS["NOT_SELECTED"] = "Не выбрано";
 ?>

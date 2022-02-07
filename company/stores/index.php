@@ -5,14 +5,14 @@ $APPLICATION->SetTitle("");
 	"qsoft:stores.list", 
 	"stores_full", 
 	array(
-		"AMOUNT_OF_EL" => "5",
+		"AMOUNT_OF_EL" => "UNLIMITED",
 		"CACHE_TIME" => "180",
 		"CACHE_TYPE" => "A",
 		"COMPONENT_TEMPLATE" => "stores_full",
 		"IBLOCK" => "6",
 		"IBLOCK_TYPE" => "salons",
-		"LIST_PAGE_URL" => "",
-		"SHOW_ALL" => "Y",
+		"LIST_PAGE_URL" => "/company/stores/",
+		"SHOW_ALL" => "N",
 		"SHOW_MAP" => "Y",
 		"SORT_FIELD" => "NAME",
 		"SORT_ORDER" => "ASC"
