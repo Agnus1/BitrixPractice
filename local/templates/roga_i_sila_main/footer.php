@@ -16,7 +16,7 @@
 		"IBLOCKS" => "6",
 		"IBLOCK_TYPE" => "salons",
 		"PARENT_SECTION" => "",
-		"SORT_FIELD" => "ID",
+		"SORT_FIELD" => "RAND",
 		"SORT_ORDER" => "DESC",
 		"COMPONENT_TEMPLATE" => "stores_short",
 		"LIST_PAGE_URL" => "/company/stores/",

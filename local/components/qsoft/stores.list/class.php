@@ -29,29 +29,32 @@ class StoresList extends CBitrixComponent
      */
     public function executeComponent() : void
     {
-        if ($this->StartResultCache(false, false)) {
-            try {
-                $this->checkInputErrors();
-                $rsIBlockElement = $this->getSalonsList();
-                $this->arResult = $this->getArResult($rsIBlockElement);
-                $this->setLinks($this->arResult[0]["LIST_PAGE_URL"]);
-            } catch(SystemException $e) {
-                $this->hideLinks();
-                ShowError($e->getMessage());
+        try {
+            $this->checkModuleErrors();
+            $this->setHermitageAddButton();
+            
+            if ($this->StartResultCache(false, false)) {
+                    $this->checkInputErrors();
+                    $this->getArResult($this->getSalonsList());
+                    $this->setHermitageElementEditButtons();
+                    $this->setLinks($this->arResult[0]["LIST_PAGE_URL"]);
+                    $this->IncludeComponentTemplate();
             }
-
-            $this->IncludeComponentTemplate();
+        } catch (SystemException $e) {
+            ShowError($e->getMessage());
+            return;
         }
+
     }
 
     /**
      * @param CIBlockResult $rsIBlockElement
-     * @return array
+     * @return void
      */
-    protected function getArResult(CIBlockResult $rsIBlockElement) : array
+    protected function getArResult(CIBlockResult $rsIBlockElement)
     {
         while ($salon = $rsIBlockElement->GetNext()) {
-            $arResult[$salon["ID"]] = $salon;
+            $this->arResult[$salon["ID"]] = $salon;
             if ($salon['PREVIEW_PICTURE']) {
                 $images[$salon["ID"]] = $salon["PREVIEW_PICTURE"];
             }
@@ -63,11 +66,10 @@ class StoresList extends CBitrixComponent
                 $imagesSRC[$image["ID"]] = CFile::GetFileSRC($image);
             }
             foreach ($images as $salonId => $imageId) {
-                $arResult[$salonId]["IMAGE_SRC"] = $imagesSRC[$imageId]; 
+                $this->arResult[$salonId]["IMAGE_SRC"] = $imagesSRC[$imageId];
             }
         }
-
-        return array_values($arResult);
+        $this->arResult = array_values($this->arResult);
     }
 
     /**
@@ -79,7 +81,6 @@ class StoresList extends CBitrixComponent
         $arSelect = [
             "ID",
             "IBLOCK_ID",
-            "IBLOCK_SECTION_ID",
             "NAME",
             "PREVIEW_PICTURE",
             "PROPERTY_PHONE",
@@ -125,12 +126,14 @@ class StoresList extends CBitrixComponent
         if (intval($this->arParams["IBLOCK"]) <= 0) {
             throw new SystemException(GetMessage("WRONG_IBLOCK"));
         }
+    }
 
+    protected function checkModuleErrors() : void
+    {
         if (!CModule::IncludeModule("iblock")) {
             throw new SystemException(GetMessage("IBLOCK_MODULE_NOT_INSTALLED"));
         }
     }
-
     /**
      * @return String Serialized string with map coordinates
      */
@@ -162,10 +165,38 @@ class StoresList extends CBitrixComponent
     /**
      * @return void
      */
-    protected function hideLinks() : void
+    protected function setHermitageElementEditButtons() : void
     {
-        $this->arParams["SHOW_MAP"] = false;
-        $this->arParams["SHOW_ALL"] = false;
-        $this->arParams["LIST_PAGE_URL"] = "#";
+        if (!empty($this->arResult)) {
+            foreach ($this->arResult as &$salon) {
+                $arButtons = CIBlock::GetPanelButtons(
+                    $salon["IBLOCK_ID"],
+                    $salon["ID"],
+                    0,
+                    ["SECTION_BUTTONS" => false, "SESSID" => false]
+                );
+
+                $salon["EDIT_LINK"] = $arButtons["edit"]["edit_element"]["ACTION_URL"];
+                $salon["DELETE_LINK"] = $arButtons["edit"]["delete_element"]["ACTION_URL"];
+                $salon["EDIT_LINK_TEXT"] = $arButtons["edit"]["edit_element"]["TEXT"];
+                $salon["DELETE_LINK_TEXT"] = $arButtons["edit"]["delete_element"]["TEXT"];
+            }
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected  function  setHermitageAddButton() : void
+    {
+        $arButtons = CIBlock::GetPanelButtons(
+            $this->arParams["IBLOCK"],
+            0,
+            0,
+            ["SECTION_BUTTONS" => false, "SESSID" => false]
+        );
+        $this->arParams["ADD_LINK"] = $arButtons["edit"]["add_element"]["ACTION_URL"];
+        $this->arParams["ADD_LINK_TEXT"] = $arButtons["edit"]["add_element"]["TEXT"];
+
     }
 }
