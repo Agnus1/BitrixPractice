@@ -113,8 +113,9 @@ class StoresList extends CBitrixComponent
         $result = CIBlockElement::GetList($arSort, $arFilter, false, $arLimit, $arSelect);
 
         if (!$result->SelectedRowsCount()) {
-            throw new SystemException(GetMessage("NO_ELEMENTS"));
+            ShowError(GetMessage("NO_ELEMENTS"));
         }
+
         return $result;
     }
 
@@ -128,12 +129,16 @@ class StoresList extends CBitrixComponent
         }
     }
 
+    /**
+     * @return void
+     */
     protected function checkModuleErrors() : void
     {
         if (!CModule::IncludeModule("iblock")) {
             throw new SystemException(GetMessage("IBLOCK_MODULE_NOT_INSTALLED"));
         }
     }
+
     /**
      * @return String Serialized string with map coordinates
      */
