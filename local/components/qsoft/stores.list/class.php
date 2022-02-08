@@ -5,6 +5,8 @@ use Bitrix\Main\SystemException;
 
 class StoresList extends CBitrixComponent
 {
+    private $resultCacheKeys = [];
+
     /**
      * @param array $arParams
      * @return array
@@ -12,7 +14,7 @@ class StoresList extends CBitrixComponent
     public function onPrepareComponentParams(array $arParams) : array
     {
         $arParams["SHOW_ALL"] = ($arParams["SHOW_ALL"] === "Y");
-        $arParams["SHOW_MAP"] = ($arParams["SHOW_MAP"] == "Y");
+        $arParams["SHOW_MAP"] = ($arParams["SHOW_MAP"] === "Y");
 
         unset($arParams["IBLOCK_TYPE"]);
         if (!$arParams["SHOW_ALL"]) {
@@ -32,12 +34,13 @@ class StoresList extends CBitrixComponent
         try {
             $this->checkModuleErrors();
             $this->setHermitageAddButton();
-            
             if ($this->StartResultCache(false, false)) {
                     $this->checkInputErrors();
                     $this->getArResult($this->getSalonsList());
                     $this->setHermitageElementEditButtons();
-                    $this->setLinks($this->arResult[0]["LIST_PAGE_URL"]);
+                    $this->setLinks();
+                    $this->setMapSerializedPlacemarks();
+                    $this->SetResultCacheKeys($this->resultCacheKeys);
                     $this->IncludeComponentTemplate();
             }
         } catch (SystemException $e) {
@@ -54,7 +57,7 @@ class StoresList extends CBitrixComponent
     protected function getArResult(CIBlockResult $rsIBlockElement)
     {
         while ($salon = $rsIBlockElement->GetNext()) {
-            $this->arResult[$salon["ID"]] = $salon;
+            $this->arResult["ELEMENTS"][$salon["ID"]] = $salon;
             if ($salon['PREVIEW_PICTURE']) {
                 $images[$salon["ID"]] = $salon["PREVIEW_PICTURE"];
             }
@@ -66,10 +69,9 @@ class StoresList extends CBitrixComponent
                 $imagesSRC[$image["ID"]] = CFile::GetFileSRC($image);
             }
             foreach ($images as $salonId => $imageId) {
-                $this->arResult[$salonId]["IMAGE_SRC"] = $imagesSRC[$imageId];
+                $this->arResult["ELEMENTS"][$salonId]["IMAGE_SRC"] = $imagesSRC[$imageId];
             }
         }
-        $this->arResult = array_values($this->arResult);
     }
 
     /**
@@ -86,9 +88,15 @@ class StoresList extends CBitrixComponent
             "PROPERTY_PHONE",
             "PROPERTY_ADDRESS",
             "PROPERTY_WORK_HOURS",
-            $this->arParams["SHOW_ALL"] ? "LIST_PAGE_URL" : "",
-            $this->arParams["SHOW_MAP"] ? "PROPERTY_MAP" : "",
         ];
+
+        if ($this->arParams["SHOW_ALL"]) {
+            $arSelect[] = "LIST_PAGE_URL";
+        }
+
+        if ($this->arParams["SHOW_MAP"]) {
+            $arSelect[] = "PROPERTY_MAP";
+        }
 
         // WHERE
         $arFilter = [
@@ -102,6 +110,8 @@ class StoresList extends CBitrixComponent
             $arLimit = [
                 "nTopCount" => $this->arParams['AMOUNT_OF_EL'],
             ];
+        } else {
+            $arLimit = false;
         }
 
         //ORDER BY
@@ -140,11 +150,11 @@ class StoresList extends CBitrixComponent
     }
 
     /**
-     * @return String Serialized string with map coordinates
+     * @return voidQ
      */
-    protected function getMapSerializedPlacemarks() : String
+    protected function setMapSerializedPlacemarks() : void
     {
-        foreach ($this->arResult as $salon) {
+        foreach ($this->arResult["ELEMENTS"] as $salon) {
             list($lat, $lon) = explode(',', $salon["PROPERTY_MAP_VALUE"]);
             $res[] = [
                 "LON" => $lon,
@@ -153,18 +163,19 @@ class StoresList extends CBitrixComponent
             ];
         }
 
-        return  serialize($res);
+        $this->arResult["MAP_PLACEMARKS"] = serialize($res);
+        $this->resultCacheKeys[] = "MAP_PLACEMARKS";
     }
 
     /**
      * @param String|null $listPageUrl
      * @return void
      */
-    protected function setLinks(?String $listPageUrl) : void
+    protected function setLinks() : void
     {
-        if ($this->arParams["SHOW_ALL"]){
-            $this->arParams["LIST_PAGE_URL"] = empty($this->arParams["LIST_PAGE_URL"]) ? $listPageUrl : $this->arParams["LIST_PAGE_URL"];
-        }
+        if ($this->arParams["SHOW_ALL"] && $this->arResult["ELEMENTS"][0]["LIST_PAGE_URL"]) {
+            $this->arParams["LIST_PAGE_URL"] = empty($this->arParams["LIST_PAGE_URL"]) ? $this->arResult["ELEMENTS"][0]["LIST_PAGE_URL"] : $this->arParams["LIST_PAGE_URL"];
+        };
     }
 
     /**
@@ -172,8 +183,8 @@ class StoresList extends CBitrixComponent
      */
     protected function setHermitageElementEditButtons() : void
     {
-        if (!empty($this->arResult)) {
-            foreach ($this->arResult as &$salon) {
+        if (!empty($this->arResult["ELEMENTS"])) {
+            foreach ($this->arResult["ELEMENTS"] as &$salon) {
                 $arButtons = CIBlock::GetPanelButtons(
                     $salon["IBLOCK_ID"],
                     $salon["ID"],
