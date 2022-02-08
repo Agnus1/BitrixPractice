@@ -23,7 +23,7 @@ $frame = $this->createFrame()->begin(GetMessage("LOADING"));
  		<?php endif?>
     </div>
     <div class="grid gap-6 grid-cols-1 lg:grid-cols-2">
-    	<?php foreach ($arResult as $salon):?>
+    	<?php foreach ($arResult["ELEMENTS"] as $salon):?>
             <?php
                 $this->AddEditAction($salon['ID'], $salon['EDIT_LINK'], CIBlock::GetArrayByID($salon["IBLOCK_ID"], "ELEMENT_EDIT"));
                 $this->AddDeleteAction($salon['ID'], $salon['DELETE_LINK'], CIBlock::GetArrayByID($salon["IBLOCK_ID"], "ELEMENT_DELETE"), ["CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')]);
