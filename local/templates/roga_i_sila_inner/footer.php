@@ -20,10 +20,9 @@
 		"SORT_FIELD" => "RAND",
 		"SORT_ORDER" => "DESC",
 		"COMPONENT_TEMPLATE" => "stores_short",
-		"LIST_PAGE_URL" => "/company/stores/",
+		"LIST_PAGE_URL" => "",
 		"SHOW_ALL" => "Y",
-		"IBLOCK" => "6",
-		"SHOW_MAP" => "Y"
+		"IBLOCK" => "6"
 	),
 	false
 );?>
