@@ -17,10 +17,8 @@ $this->setFrameMode(true);
 <div class="col-span-4 sm:col-span-3 lg:col-span-4 p-4">
 
     <div class="space-y-4">
-        <?php if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arResult["DETAIL_PICTURE"])):?>
-            <img src="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>" alt="<?=$arResult["DETAIL_PICTURE"]["ALT"]?>"
-                 title="<?=$arResult["DETAIL_PICTURE"]["TITLE"]?>">
-        <?php endif?>
+        <img src="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>" alt="<?=$arResult["DETAIL_PICTURE"]["ALT"]?>"
+             title="<?=$arResult["DETAIL_PICTURE"]["TITLE"]?>">
         <div>
             <span class="text-sm text-white italic rounded bg-orange px-2">Это</span>
             <span class="text-sm text-white italic rounded bg-orange px-2">Теги</span>
