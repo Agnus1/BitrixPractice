@@ -154,15 +154,17 @@ class StoresList extends CBitrixComponent
      */
     protected function setMapSerializedPlacemarks() : void
     {
+        $res["yandex_lat"] = 55.738299999994;
+        $res["yandex_lon"] = 37.5946;
+        $res["yandex_scale"] = 10;
         foreach ($this->arResult["ELEMENTS"] as $salon) {
             list($lat, $lon) = explode(',', $salon["PROPERTY_MAP_VALUE"]);
-            $res[] = [
+            $res["PLACEMARKS"][] = [
                 "LON" => $lon,
                 "LAT" => $lat,
                 "TEXT" => $salon["NAME"],
             ];
         }
-
         $this->arResult["MAP_PLACEMARKS"] = serialize($res);
         $this->resultCacheKeys[] = "MAP_PLACEMARKS";
     }

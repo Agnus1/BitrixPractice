@@ -66,14 +66,7 @@ $frame = $this->createFrame()->begin(GetMessage("LOADING"));
             <?php endif?>            
         <?php endforeach?>
     </div>
-    <?php if ($arParams["SHOW_MAP"]):?>
-        <div class="my-4 space-y-4 max-w-4xl">
-            <hr>
-            <p class="text-black text-2xl font-bold mb-4"><?=GetMessage("SALONS_ON_MAP")?></p>
-            <div class="bg-gray-200">
-            </div>
-        </div>
-    <?php endif?>
+
 </div>
 <?php
 // закрытие динамической зоны компонента
