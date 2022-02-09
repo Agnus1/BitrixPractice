@@ -1,4 +1,4 @@
-<?php if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -14,21 +14,17 @@
 // начало динамической зоны компонента, установка заглушки при загрузке
 $frame = $this->createFrame()->begin(GetMessage("LOADING"));
 ?>
-<?php $this->AddEditAction("main-container", $arParams['ADD_LINK'], $arParams["ADD_LINK_TEXT"]);?>
-<div id="<?=$this->GetEditAreaId("main-container");?>" class="flex-1">
+<div class="flex-1">
     <div>
         <p class="inline-block text-3xl text-black font-bold mb-4"><?=GetMessage('OUR_SALONS')?></p>
-        <?php if ($arParams["SHOW_ALL"]):?>
+        <?if ($arParams["SHOW_ALL"]):?>
         	<span class="inline-block pl-1"> / <a href="<?=$arParams['LIST_PAGE_URL']?>" class="inline-block pl-1 text-gray-600 <?=$arParams["SHOW_ALL"] ? "hover:text-orange" : "disabled"?>"><b><?=GetMessage("ALL")?></b></a></span>
- 		<?php endif?>
+ 		<?endif?>   
     </div>
+    
     <div class="grid gap-6 grid-cols-1 lg:grid-cols-2">
-    	<?php foreach ($arResult["ELEMENTS"] as $salon):?>
-            <?php
-                $this->AddEditAction($salon['ID'], $salon['EDIT_LINK'], CIBlock::GetArrayByID($salon["IBLOCK_ID"], "ELEMENT_EDIT"));
-                $this->AddDeleteAction($salon['ID'], $salon['DELETE_LINK'], CIBlock::GetArrayByID($salon["IBLOCK_ID"], "ELEMENT_DELETE"), ["CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')]);
-            ?>
-	        <div class="w-full flex" id="<?=$this->GetEditAreaId($salon['ID']);?>">
+    	<?foreach ($arResult as $salon):?>
+	        <div class="w-full flex">
 	            <div class="h-48 lg:h-auto w-32 xl:w-48 flex-none text-center rounded-lg overflow-hidden">
 	                <a class="block w-full h-full <?=$arParams["SHOW_ALL"] ? "hover:opacity-75" : "disabled"?>" href="<?=$arParams['LIST_PAGE_URL']?>">
 	                	<img
@@ -49,10 +45,10 @@ $frame = $this->createFrame()->begin(GetMessage("LOADING"));
 	                </div>
 	            </div>
         	</div>
-        <?php endforeach?>
+        <?endforeach?>
     </div>
 </div>
-<?php
+<?
 // закрытие динамической зоны компонента
 $frame->end();
 ?>

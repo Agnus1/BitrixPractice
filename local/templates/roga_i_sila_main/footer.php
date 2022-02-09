@@ -7,7 +7,7 @@
 	"qsoft:stores.list", 
 	"stores_short", 
 	array(
-		"ALL_URL" => "",
+		"ALL_URL" => "/company/stores/",
 		"AMOUNT_OF_EL" => "2",
 		"CACHE_GROUPS" => "Y",
 		"CACHE_TIME" => "3600",
@@ -19,10 +19,9 @@
 		"SORT_FIELD" => "RAND",
 		"SORT_ORDER" => "DESC",
 		"COMPONENT_TEMPLATE" => "stores_short",
-		"LIST_PAGE_URL" => "/company/stores/",
+		"LIST_PAGE_URL" => "/company/stores",
 		"SHOW_ALL" => "Y",
-		"IBLOCK" => "6",
-		"SHOW_MAP" => "N"
+		"IBLOCK" => "6"
 	),
 	false
 );?>
