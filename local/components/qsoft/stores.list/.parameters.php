@@ -1,22 +1,20 @@
-<?
+<?php
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
-if(!CModule::IncludeModule("iblock"))
+if(!CModule::IncludeModule("iblock")) {
 	return;
+}
 
 $arIBlockType = CIBlockParameters::GetIBlockTypes();
-
-$arIBlock = [
-	"-" => GetMessage("IBLOCK_ANY"),
-];
 $rsIBlock = CIBlock::GetList(["sort" => "asc"], ["TYPE" => $arCurrentValues["IBLOCK_TYPE"], "ACTIVE"=>"Y"]);
+$arIBlock[0] = GetMessage("NOT_SELECTED");
 
 while ($arr = $rsIBlock->Fetch())
 {
 	$arIBlock[$arr["ID"]] = "[".$arr["ID"]."] ".$arr["NAME"];
 	$fieldsIBlock = array_combine(array_keys($arr), array_keys($arr));
 }
-$fieldsIBlock["RAND"] = GetMessage("RAND"); 
+$fieldsIBlock["RAND"] = GetMessage("RAND");
 
 $arComponentParameters = [
 	"GROUPS" => [],
@@ -35,11 +33,10 @@ $arComponentParameters = [
 			"VALUES" => $arIBlock,
 			"REFRESH" => "Y",
 		],
-		"AMOUNT_OF_EL" => [
+		"SHOW_MAP" => [
 			"PARENT" => "BASE",
-			"NAME" => GetMessage("AMOUNT_OF_EL"),
-			"TYPE" => "STRING",
-			"DEFAULT" => '2',
+			"NAME" => GetMessage("SHOW_MAP"),
+			"TYPE" => "CHECKBOX",
 		],
 		"SORT_FIELD" => [
 			"PARENT" => "ADDITIONAL_SETTINGS",
@@ -47,7 +44,6 @@ $arComponentParameters = [
 			"TYPE" => "LIST",
 			"VALUES" => $fieldsIBlock,
 			"DEFAULT" => "RAND",
-			"REFRESH" => "Y",
 		],
 		"SORT_ORDER" => [
 			"PARENT" => "ADDITIONAL_SETTINGS",
@@ -57,22 +53,46 @@ $arComponentParameters = [
 				"DESC" => GetMessage("DESC"),
 				"ASC" => GetMessage("ASC")
 			],
-			"DEFAULT" => "DESC",
 		],
 		"SHOW_ALL" => [
 			"PARENT" => "URL_TEMPLATES",
 			"NAME" => GetMessage("SHOW_ALL"),
 			"TYPE" => "CHECKBOX",
-			"DEFAULT" => "Y",
+			"REFRESH" => "Y",
 		],
-		"LIST_PAGE_URL" => CIBlockParameters::GetPathTemplateParam(
-			"ALL",
-			"ALL_URL",
-			GetMessage("IBLOCK_ALL_URL"),
-			"",
-			"URL_TEMPLATES"
-		),
 		"CACHE_TIME"  =>  ["DEFAULT"=>180],
 	],
 ];
+
+// Скрытие поля ввода URL для списка салонов, если не устновлен чекбокс на показ кнопки "Все"
+if ($arCurrentValues["SHOW_ALL"] == "Y") {
+	$arComponentParameters["PARAMETERS"]["LIST_PAGE_URL"] = CIBlockParameters::GetPathTemplateParam(
+		"ALL",
+		"LIST_PAGE_URL",
+		GetMessage("IBLOCK_ALL_URL"),
+		"",
+		"URL_TEMPLATES"
+	);
+}
+
+// Скрытие поля ввода количества элементов, если инфоблок не выбран
+if (in_array($arCurrentValues["IBLOCK"], array_keys($arIBlock)) && intval($arCurrentValues["IBLOCK"]) !== 0) {
+	$amount = range(1, CIBlockElement::GetList(
+		[],
+		['IBLOCK_ID' => $arCurrentValues["IBLOCK"]],
+		[],
+		false,
+		[],
+	));
+	$amount = array_combine(array_values($amount), $amount);
+	$amount["UNLIMITED"] = GetMessage("UNLIMITED");
+
+	$arComponentParameters["PARAMETERS"]["AMOUNT_OF_EL"] = [
+		"PARENT" => "BASE",
+		"NAME" => GetMessage("AMOUNT_OF_EL"),
+		"TYPE" => "LIST",
+		"VALUES" => $amount,
+	];
+}
+
 ?>
