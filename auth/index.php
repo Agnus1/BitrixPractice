@@ -13,7 +13,7 @@ if (!$userName)
     BX.localStorage.remove("eshop_user_name");
     <?endif?>
 
-    <?if ($_REQUEST["register"]!=="yes" && isset($_REQUEST["backurl"]) && $_REQUEST["backurl"] <> '' && preg_match('#^/\w#', $_REQUEST["backurl"])):?>
+    <?if ($_REQUEST["TYPE"] !== 'REGISTRATION' && isset($_REQUEST["backurl"]) && $_REQUEST["backurl"] <> '' && preg_match('#^/\w#', $_REQUEST["backurl"])):?>
     document.location.href = "<?=CUtil::JSEscape($_REQUEST["backurl"])?>";
     <?
         LocalRedirect($_REQUEST["backurl"]);
@@ -23,11 +23,12 @@ if (!$userName)
 <?
 $APPLICATION->SetTitle("Авторизация");
 ?>
-<div class="mx-auto" style="width: 40%;"><p>«Добро пожаловать!</p>
-    <?php if ($_REQUEST["register"] !== "yes"):?>
+<div class="mx-auto" style="width: 40%;">
+    <?php if ($_REQUEST["TYPE"] !== 'REGISTRATION'):?>
         <p>Вы спешно авторизовались.</p>
         <p><a href="<?=SITE_DIR?>">Вернуться на главную страницу</a></p>
     <?php else:?>
+        <p>«Добро пожаловать!</p>
         Пожалуйста, проверьте Ваш email – мы отправили Вам приветственное письмо.<br>
         Теперь у Вас есть возможность:
         <ul>

@@ -1,7 +1,6 @@
 <?php
 
 AddEventHandler("main", "OnAfterUserAuthorize", Array("SendUserAuth", "OnAfterUserAuthorizeHandler"));
-AddEventHandler("main", "OnAfterUserRegister", Array("SendUserAuth", "OnAfterUserRegisterHandler"));
 
 
 class SendUserAuth
@@ -24,17 +23,4 @@ class SendUserAuth
         CEvent::Send("USER_AUTHORIZED", SITE_ID, $inf);
     }
 
-    // создаем обработчик события "OnAfterUserRegister"
-    public static function OnAfterUserRegisterHandler(&$arFields)
-    {
-        if($arFields["USER_ID"] > 0) {
-            $inf = [
-                "EMAIL" => $arFields["EMAIL"],
-                "LOGIN" => $arFields["LOGIN"],
-                "NAME" => $arFields["NAME"],
-                "LAST_NAME" => $arFields["LAST_NAME"],
-            ];
-            CEvent::Send("NEW_USER", SITE_ID, $inf);
-        }
-    }
 }
