@@ -39,7 +39,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/assets/js/script.js");
                         array(
                             "FORGOT_PASSWORD_URL" => "",
                             "PROFILE_URL" => "/personal/?backurl=" . $curPageEscUrl,
-                            "REGISTER_URL" => "/auth/?backurl=" . $curPageEscUrl,
+                            "REGISTER_URL" => "/auth/",
                             "SHOW_ERRORS" => "Y",
                             "COMPONENT_TEMPLATE" => "auth_form_header",
                             "AUTHORIZE_URL" => "/auth/?backurl=" . $curPageEscUrl,
