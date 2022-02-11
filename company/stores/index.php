@@ -2,9 +2,9 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("");
 ?><?$APPLICATION->IncludeComponent(
-	"qsoft:stores.list",
-	"stores_full",
-	Array(
+	"qsoft:stores.list", 
+	"stores_full", 
+	array(
 		"AMOUNT_OF_EL" => "UNLIMITED",
 		"CACHE_TIME" => "180",
 		"CACHE_TYPE" => "A",
@@ -14,6 +14,8 @@ $APPLICATION->SetTitle("");
 		"SHOW_ALL" => "N",
 		"SHOW_MAP" => "Y",
 		"SORT_FIELD" => "NAME",
-		"SORT_ORDER" => "ASC"
-	)
+		"SORT_ORDER" => "ASC",
+		"COMPONENT_TEMPLATE" => "stores_full"
+	),
+	false
 );?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

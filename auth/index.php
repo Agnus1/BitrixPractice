@@ -13,7 +13,7 @@ if (!$userName)
     BX.localStorage.remove("eshop_user_name");
     <?endif?>
 
-    <?if ($_REQUEST["TYPE"] !== 'REGISTRATION' && isset($_REQUEST["backurl"]) && $_REQUEST["backurl"] <> '' && preg_match('#^/\w#', $_REQUEST["backurl"])):?>
+    <?if ($_REQUEST["TYPE"] !== 'REGISTRATION' && isset($_REQUEST["backurl"]) && $_REQUEST["backurl"] <> '' && (preg_match('#^/\w#', $_REQUEST["backurl"]) || $_REQUEST["backurl"] == "/")):?>
     document.location.href = "<?=CUtil::JSEscape($_REQUEST["backurl"])?>";
     <?
         LocalRedirect($_REQUEST["backurl"]);
