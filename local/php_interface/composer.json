@@ -1,0 +1,6 @@
+{
+    "name": "i.kim/php_interface",
+    "require-dev": {
+        "symfony/var-dumper": "^5.4"
+    }
+}
