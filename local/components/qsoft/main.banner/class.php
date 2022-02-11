@@ -10,13 +10,15 @@ CBitrixComponent::includeComponentClass('bitrix:advertising.banner');
 
 class HornsAndPowerBanner extends \AdvertisingBanner
 {
-    protected function loadBanners()
+    public function onPrepareComponentParams($params)
     {
-        global $USER;
-        if (!$USER->IsAuthorized()) {
-            $this->arParams['QUANTITY'] = 1;
-        }
-        parent::loadBanners();
-        $this->arResult["TEST"] = $this->templateProps;
+       $params = parent::onPrepareComponentParams($params);
+
+       global $USER;
+       if (! $USER->IsAuthorized()) {
+           $params['QUANTITY'] = 1;
+       }
+      
+       return $params;
     }
 }
