@@ -30,20 +30,22 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/assets/js/script.js");
                     </span>
                 </div>
                 <div>
-                    <?$APPLICATION->IncludeComponent(
-                            "bitrix:system.auth.form", 
-                            "auth_form_header", 
-                            array(
-                                "FORGOT_PASSWORD_URL" => "",
-                                "PROFILE_URL" => "/personal/",
-                                "REGISTER_URL" => "/auth/",
-                                "SHOW_ERRORS" => "N",
-                                "COMPONENT_TEMPLATE" => "auth_form_header",
-                                "AUTHORIZE_URL" => "/login/",
-                                "PERSONAL_URL" => "/personal/profile/"
-                            ),
-                            false
-                        );?>
+                    <?php
+                    $curPageEscUrl = str_replace("/", "%2F", $APPLICATION->GetCurPage());
+                    $APPLICATION->IncludeComponent(
+	"bitrix:system.auth.form", 
+	"auth_form_header", 
+	array(
+		"FORGOT_PASSWORD_URL" => "",
+		"PROFILE_URL" => "/personal/?backurl=" . $curPageEscUrl,
+		"REGISTER_URL" => "/auth/",
+		"SHOW_ERRORS" => "Y",
+		"COMPONENT_TEMPLATE" => "auth_form_header",
+		"AUTHORIZE_URL" => "/auth/?backurl=" . $curPageEscUrl,
+		"PERSONAL_URL" => "/personal/profile/"
+	),
+	false
+);?>
                 </div>
             </div>
         </div>

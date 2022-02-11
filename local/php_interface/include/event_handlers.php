@@ -2,6 +2,7 @@
 
 AddEventHandler("main", "OnAfterUserAuthorize", Array("SendUserAuth", "OnAfterUserAuthorizeHandler"));
 
+
 class SendUserAuth
 {
     // создаем обработчик события "OnAfterUserAuthorizeHandler"
@@ -21,4 +22,5 @@ class SendUserAuth
 
         CEvent::Send("USER_AUTHORIZED", SITE_ID, $inf);
     }
+
 }
